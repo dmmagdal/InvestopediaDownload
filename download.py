@@ -8,7 +8,7 @@ import argparse
 import json
 import os
 import re
-from typing import Dict, List
+from typing import List
 
 from bs4 import BeautifulSoup
 import requests
@@ -74,23 +74,26 @@ def get_articles_from_term_page(term_link: str) -> List[str]:
 	return article_links
 
 
-def get_article(article_link: str, file_path: str) -> None:
+def get_article(article_link: str, file_path: str) -> bool:
 	'''
 	Download article (HTML) to file.
 	@param: article_link (str), the URL of the article.
 	@param: file_path (str), the path to the file.
-	@preturn: returns nothing.
+	@preturn: returns a boolean as to whether the download succeeded or
+		not.
 	'''
 	# Query the article page.
 	response = requests.get(article_link)
 	return_status = response.status_code
 	if return_status != 200:
 		print(f"Request returned {return_status} status code for {article_link}")
-		return
+		return False
 	
 	# Output the article HTML content to file.
 	with open(file_path, "w+") as f:
 		f.write(response.text)
+
+	return True
 
 
 def main():
@@ -185,7 +188,11 @@ def main():
 				get_article(article_link, file_path)
 
 	# Save the article map.
-	with open("article_map.json", "w+") as f:
+	graph_folder = "./graph"
+	file_path = os.path.join(graph_folder, "article_map.json")
+	if not os.path.exists(graph_folder):
+		os.makedirs(graph_folder)
+	with open(file_path, "w+") as f:
 		json.dump(article_map, f, indent=4)
 
 	# Exit the program.

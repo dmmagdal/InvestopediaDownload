@@ -1,5 +1,7 @@
 # Python Virtualenv
 /investopedia-env
+/__pycache__
 
 # Data
 /data
+/graph
