@@ -1,6 +1,6 @@
 # Investopedia Download
 
-Description: A web scraper that downloads key pages from investopedia.com.
+Description: Download key terms defined in Investopedia as well as any related articles.
 
 
 ### Setup
@@ -14,6 +14,20 @@ Description: A web scraper that downloads key pages from investopedia.com.
  - Initial download script
  - Build graph script
  - Download from huggingface
+
+
+### Notes
+
+ - Calling `download.py`
+     - 6,243 (as of 12/31/24) total number of documents.
+     - Completed in hours.
+ - Calling `build_graph.py`
+     - The graph method of exhaustively searching (BFS) is the most efficient.
+     - Still is *very* slow compared to the more direct download method in `download.py` but that is due to the information for `download.py` being in a relatively central place (rather than having to explore to discover it).
+     - TODO: Go back and allow this program to build off of existing graphs from previous (smaller) runs.
+     - Setting `max_depth` 2
+         - 9,844 total number of documents (~3.7GB).
+         - Completed in 26 hours.
 
 
 ### Investopedia References

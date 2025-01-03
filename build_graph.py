@@ -135,7 +135,7 @@ def explore_related(
 		(
 			tag.find('span', class_='card__title-text').text, 
 			tag["href"], 
-			True
+			False
 		)
 		for tag in article_tags
 	]
